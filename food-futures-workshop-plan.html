@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Futures — Dinner &amp; Workshop Plan · 5–6 August</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#132821;
+    --ink-soft:#1c352b;
+    --paper:#f2ead2;
+    --paper-dim:#e6dcbd;
+    --wheat:#d8a53f;
+    --teal:#3f7d6c;
+    --alert:#bd4726;
+    --line: rgba(242,234,210,0.14);
+    --line-strong: rgba(242,234,210,0.28);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:'Public Sans', sans-serif; line-height:1.6; font-size:17px;
+  }
+  h1,h2,h3,.display{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; color:var(--paper); }
+  .stamp{ font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.14em; font-size:12px; color:var(--wheat); }
+  a{color:var(--wheat);}
+  .wrap{max-width:960px; margin:0 auto; padding:0 28px;}
+
+  .hero{ padding:90px 0 60px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+  .hero::before{ content:""; position:absolute; top:-120px; right:-140px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(63,125,108,0.35), transparent 70%); }
+  .hero .stamp{margin-bottom:22px; display:block;}
+  .hero h1{ font-size:clamp(32px, 5vw, 52px); line-height:1.06; margin:0 0 24px; max-width:17ch; }
+  .hero p.lede{ font-size:19px; max-width:60ch; color:var(--paper-dim); margin:0 0 30px; }
+  .hero .meta{ display:flex; gap:20px; flex-wrap:wrap; font-size:13px; color:var(--paper-dim); opacity:0.8; }
+  .hero .meta span{border-left:2px solid var(--wheat); padding-left:10px;}
+
+  section{padding:60px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal); margin:0 0 14px; }
+  h2{font-size:clamp(25px,3.2vw,32px); margin:0 0 18px; max-width:24ch;}
+  section > p.intro{max-width:68ch; color:var(--paper-dim); font-size:16.5px;}
+
+  blockquote{ margin:30px 0; padding:20px 0 20px 26px; border-left:3px solid var(--wheat); font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:19px; color:var(--paper); max-width:62ch; }
+  blockquote cite{ display:block; font-family:'IBM Plex Mono', monospace; font-style:normal; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); margin-top:10px; }
+
+  /* HYPOTHESIS BAND */
+  .hypothesis{
+    background:linear-gradient(135deg, var(--teal), #274d42);
+    border-radius:8px; padding:32px; margin-top:10px;
+  }
+  .hypothesis h3{font-size:20px; margin:0 0 12px;}
+  .hypothesis p{color:rgba(242,234,210,0.92); font-size:15.5px; margin:0; max-width:66ch;}
+  .vectors{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;}
+  .vector-chip{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase; background:rgba(242,234,210,0.12); border:1px solid rgba(242,234,210,0.3); padding:8px 13px; border-radius:20px; }
+
+  /* TIMELINE */
+  .timeline{position:relative; margin-top:34px; padding-left:2px;}
+  .timeline::before{ content:""; position:absolute; left:78px; top:6px; bottom:6px; width:1px; background:var(--line-strong); }
+  .tl-item{ display:grid; grid-template-columns:78px 1fr; gap:24px; margin-bottom:30px; position:relative; }
+  .tl-time{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--wheat); padding-top:2px; text-align:right; }
+  .tl-dot{ position:absolute; left:74px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--wheat); transform:translateX(-50%); }
+  .tl-content{ background:var(--ink-soft); border:1px solid var(--line-strong); border-radius:6px; padding:20px 22px; }
+  .tl-content h4{ font-family:'Public Sans'; font-weight:700; font-size:16px; margin:0 0 6px; color:var(--paper); }
+  .tl-content .fmt{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--teal); margin-bottom:8px; display:inline-block; }
+  .tl-content p{ margin:6px 0 0; color:var(--paper-dim); font-size:14.5px; }
+  .tl-content .obj{ font-size:13.5px; color:rgba(242,234,210,0.65); margin-top:8px; font-style:italic; }
+
+  /* BREAKOUT GRID (3hr block) */
+  .breakouts{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:30px;}
+  .breakout{ background:var(--ink-soft); border:1px solid var(--line-strong); border-radius:6px; padding:22px; }
+  .breakout .num{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--wheat); letter-spacing:0.08em; }
+  .breakout h3{font-size:18px; margin:8px 0 8px;}
+  .breakout p{margin:0 0 8px; font-size:14.5px; color:var(--paper-dim);}
+  .breakout .q{ font-size:13.5px; color:rgba(242,234,210,0.7); border-top:1px solid var(--line); padding-top:10px; margin-top:10px; }
+
+  /* SHOCK COMPARISON */
+  .shock-compare{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:30px 0; }
+  .shock-col{ background:var(--paper); color:var(--ink); border-radius:8px; padding:26px; }
+  .shock-col.fortified{ background:var(--teal); color:var(--paper); }
+  .shock-col h4{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 12px; }
+  .shock-col ul{ margin:0; padding-left:18px; font-size:14.5px; }
+  .shock-col li{margin-bottom:8px;}
+
+  .outputs-list{list-style:none; padding:0; margin:28px 0 0; display:grid; gap:12px;}
+  .outputs-list li{ display:grid; grid-template-columns:22px 1fr; gap:12px; font-size:15.5px; color:var(--paper-dim); padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .outputs-list li:last-child{border-bottom:none;}
+  .outputs-list li::before{content:"—"; color:var(--wheat);}
+
+  footer{ padding:46px 0 76px; text-align:center; }
+  footer p{color:var(--paper-dim); font-size:13.5px; max-width:56ch; margin:0 auto;}
+
+  @media (max-width: 720px){
+    .breakouts{grid-template-columns:1fr;}
+    .shock-compare{grid-template-columns:1fr;}
+    .timeline::before{left:58px;}
+    .tl-item{grid-template-columns:58px 1fr; gap:14px;}
+    .tl-dot{left:54px;}
+    .tl-time{font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="stamp">Dark Matter Labs · Camden Council · Camden Food Partnership · Camden Food Mission</span>
+    <h1>Food Futures — dinner &amp; workshop plan</h1>
+    <p class="lede">A UBNI-format dinner that confronts guests with three food futures before a single working day turns the one worth choosing into a plan — aligning collective buying power across schools, health, business, community, and citizens.</p>
+    <div class="meta">
+      <span>Tue 5 Aug · Evening dinner experience</span>
+      <span>Wed 6 Aug · Workshop, 10:00–15:00</span>
+      <span>Hosted by Dark Matter Labs</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The hypothesis we're testing</p>
+    <h2>Every borough has a piece of the puzzle. None has the whole picture working together.</h2>
+    <p class="intro">Several London boroughs already have parts of a fortified, civic-led food system running well in isolation. The working hypothesis behind this event is that if Camden aligns collective buying capacity across every channel through which food enters the borough — via a Camden Food Buying Group — it can achieve organic, nutrient-dense food at real scale, build a food system genuinely resistant to shocks, and become the first place to prove the whole model, ahead of a wider rollout across London.</p>
+
+    <div class="hypothesis">
+      <h3>The five procurement vectors in scope</h3>
+      <p>Every session in the workshop returns to the same five channels — the idea is to understand, and eventually align, how each one buys food:</p>
+      <div class="vectors">
+        <span class="vector-chip">School procurement</span>
+        <span class="vector-chip">NHS procurement</span>
+        <span class="vector-chip">Business &amp; restaurant procurement</span>
+        <span class="vector-chip">Food co-ops &amp; food banks</span>
+        <span class="vector-chip">Citizen purchasing</span>
+      </div>
+    </div>
+
+    <blockquote>
+      This is the collective game that we're all playing — we're interested in the London boroughs that have all got different pieces of the puzzle working, but none of them have the whole picture together.
+      <cite>Framing for the dinner's opening remarks</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Tuesday 5 August — Evening</p>
+    <h2>The dinner: the UBNI format, as already planned</h2>
+    <p class="intro">The dinner runs as a piece of climate-crisis theatre in its own right: guests physically move between three seating scenarios over the course of the meal, each one a different food future, each served and experienced differently. It confronts the room with the fragility of the current food supply chain before anyone is asked to plan an alternative to it.</p>
+
+    <div class="hypothesis" style="background:linear-gradient(135deg, #274d42, var(--ink-soft));">
+      <h3>Three scenarios, three seats, three plates</h3>
+      <p>Participants shift seats between the three scenarios during the meal, so each course is felt at a different table, in a different mode. What arrives on the plate changes with the scenario — from a shot of industrial nutrient paste or plain white bread and butter, through to ration credits guests trade for fresh fruit and vegetables — so the differences are tasted and handled, not just narrated.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Arrival</span>
+          <h4>Informal welcome</h4>
+          <p>Drinks and open conversation as guests arrive — Camden Council, Camden Food Partnership, Camden Food Mission, practitioners from other boroughs, and industry/food-sector experts.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:30</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Framing · 10 min</span>
+          <h4>"The collective game we're all playing"</h4>
+          <p>A short opening naming the shared mission, then handing over to the UBNI dinner format itself: three scenarios, three seats, moving through the evening.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:45</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Scenario 1</span>
+          <h4>Business as usual</h4>
+          <p>A catastrophic-but-familiar future with no meaningful change: reliance on imports, fossil-fuel fertilisers, and highly processed food.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">19:20</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Scenario 2</span>
+          <h4>Nutrient depleted</h4>
+          <p>A world of major food shortages, where scarcity itself shapes what and how people eat.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">19:55</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Scenario 3</span>
+          <h4>Positive Great Improvement</h4>
+          <p>A future with advanced production techniques and Universal Basic Nutrient Income policies in place, delivering genuinely nutrient-dense food for everyone.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">20:30</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Close · light touch</span>
+          <h4>Which future did you feel?</h4>
+          <p>No panel, no debrief slides — the felt contrast between the three seats is the argument. It's the emotional groundwork the workshop builds on rationally the next morning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Wednesday 6 August — 10:00 to 15:00</p>
+    <h2>The workshop: from vision to a working plan</h2>
+    <p class="intro">Because the room already lived the "why" the night before — literally tasted it — the workshop doesn't need to re-argue the vision from scratch. The morning moves quickly through vision, pathway, and gaps, then hands the majority of the day — a full three hours — to the working detail on each procurement vector.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">10:00</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Welcome · 10 min</span>
+          <h4>Landing from last night</h4>
+          <p>A quick, light callback: which of the three UBNI scenarios — Business as Usual, Nutrient Depleted, or Positive Great Improvement — the room found itself pulled toward, and why. Sets the emotional register for the working day without re-running the framing.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">10:10</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Session 1 · 20 min</span>
+          <h4>Vision for Camden</h4>
+          <p>Bring Camden's Food Mission to life for the room — by 2030, everyone in the borough eats well every day, on nutritious, affordable, sustainable food — and show its congruence with what other progressive London boroughs are independently reaching for.</p>
+          <p class="obj">Objective: confirm the destination is already agreed, fast, since the dinner did most of this work already.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">10:30</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Session 2 · 20 min</span>
+          <h4>Pathways we can explore over the next few years</h4>
+          <p>Context and ambition for the multi-year path: what it would take to establish a Camden Food Buying Group, and the wider portfolio of investments and actions that make it viable.</p>
+          <p class="obj">Objective: turn last night's Positive Great Improvement scenario into a small number of concrete, fundable moves.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">10:50</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Session 3 · 15 min</span>
+          <h4>What already exists</h4>
+          <p>A fast visual map of the elements already working somewhere — a growers' network, a food hub site, a school buying pilot, an NHS sourcing initiative, a citizen food co-op.</p>
+          <p class="obj">Objective: replace "start from scratch" with "here's what we already have to work with."</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">11:05</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Session 4 · 15 min</span>
+          <h4>Fortify and connect: where are the gaps?</h4>
+          <p>Working directly from the map: how do we strengthen these pieces and connect them, specifically across schools, NHS, businesses &amp; restaurants, food co-ops, and citizens?</p>
+          <p class="obj">Objective: one shared, honest gap list — not five separate diagnoses.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">11:20</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Session 5 · 15 min</span>
+          <h4>The value of doing this: resilience to shocks</h4>
+          <p>Show, concretely, how today's fragmented system would weather a real food shock against how a fortified, aligned system would respond instead.</p>
+          <p class="obj">Objective: make resilience tangible — the reason the room is about to spend three hours on detail.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">11:35</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Working lunch · 25 min</span>
+          <h4>Quick turnaround</h4>
+          <p>Kept short and informal — food served at the tables so the room can keep talking, since the afternoon needs the full three hours.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time">12:00 – 15:00</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <span class="fmt">Working session · 3 hours</span>
+          <h4>Detailing the five vectors</h4>
+          <p>The core working block of the day. Five parallel breakout groups, one per procurement vector, each putting real detail on how alignment gets achieved for that channel — see the breakdown below — closing with a shared reconvene.</p>
+          <p class="obj">Objective: leave at 15:00 with a working draft of actions for each vector, not just a wishlist.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The 3-hour working block, in detail</p>
+    <h2>One breakout per procurement vector</h2>
+    <p class="intro">Each group works the same question for its own channel: what would it actually take for this vector to buy through a Camden Food Buying Group, and what's the first concrete step? Groups should include at least one practitioner who already works inside that channel.</p>
+
+    <div class="breakouts">
+      <div class="breakout">
+        <span class="num">Vector 01</span>
+        <h3>Schools</h3>
+        <p>Building on the existing procurement paper: what it takes to move from a single long-term catering contract toward a Camden-controlled buying group with agreed core ingredients and sourcing standards.</p>
+        <p class="q">Working question: what's the smallest pilot that proves the model without breaking the current contract?</p>
+      </div>
+      <div class="breakout">
+        <span class="num">Vector 02</span>
+        <h3>NHS</h3>
+        <p>Where NHS catering and food-related services in Camden already source from, and what alignment with a shared buying group would need from health-sector procurement rules and budgets.</p>
+        <p class="q">Working question: which NHS sites or services could plug into shared buying first?</p>
+      </div>
+      <div class="breakout">
+        <span class="num">Vector 03</span>
+        <h3>Businesses &amp; restaurants</h3>
+        <p>How local businesses and restaurants could buy through the same aggregated supply, and what would make that commercially attractive rather than a compliance ask.</p>
+        <p class="q">Working question: what's the value proposition that gets a restaurant to switch supplier voluntarily?</p>
+      </div>
+      <div class="breakout">
+        <span class="num">Vector 04</span>
+        <h3>Food co-ops &amp; food banks</h3>
+        <p>Where community food co-ops and food banks currently source from, and how routing more of that through a shared buying group changes cost, quality, and reliability for the people they serve.</p>
+        <p class="q">Working question: does shared buying reduce cost for the co-ops, or just shift where the cost sits?</p>
+      </div>
+      <div class="breakout">
+        <span class="num">Vector 05</span>
+        <h3>Citizens</h3>
+        <p>What share of everyday household shopping could realistically route through the same civic-led system, and what that would need — a retail front, a subscription model, a market.</p>
+        <p class="q">Working question: what's the simplest way a resident actually buys into this?</p>
+      </div>
+      <div class="breakout" style="background:transparent; border-style:dashed;">
+        <span class="num">Reconvene</span>
+        <h3>Pulling it together</h3>
+        <p>Last 20 minutes of the block (14:40–15:00): each group's headline action goes on a shared board, so the day ends at 15:00 with one visible plan across all five vectors rather than five separate ones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Why this is worth three hours</p>
+    <h2>How the present system weathers a shock, versus a fortified one</h2>
+    <p class="intro">This comparison is the pivot point of the day — the case for spending real time on detail, made concrete rather than abstract.</p>
+
+    <div class="shock-compare">
+      <div class="shock-col">
+        <h4>Today — fragmented channels</h4>
+        <ul>
+          <li>Schools, NHS, businesses, co-ops and citizens each depend on separate, disconnected supply relationships.</li>
+          <li>A shock in one channel (a contract failure, a price spike, a supply gap) has no shared buffer to draw on.</li>
+          <li>Recovery depends on each institution renegotiating alone, from a weaker individual position.</li>
+        </ul>
+      </div>
+      <div class="shock-col fortified">
+        <h4>Fortified — aligned buying group</h4>
+        <ul>
+          <li>Shared demand across all five vectors gives growers and producers a stable, larger, more predictable order to plan against.</li>
+          <li>A shock in one part of the system can be absorbed and redistributed across the wider group rather than breaking one channel alone.</li>
+          <li>The borough negotiates from a position of scale, not from five separate, smaller positions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What the day needs to produce</p>
+    <h2>Outputs to leave the room with</h2>
+    <ul class="outputs-list">
+      <li>A shared, agreed gap map across the five procurement vectors — not five separate diagnoses.</li>
+      <li>A first-draft action per vector, owned by someone in the room, with a next concrete step.</li>
+      <li>A working case for resilience that can be shown to funders, councillors, and partner boroughs.</li>
+      <li>A clear owner for pulling the five vectors into a single Camden Food Buying Group portfolio plan.</li>
+      <li>A shared understanding, across the boroughs represented, of what a replicable version of this model would need to travel beyond Camden.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Workshop plan prepared for the Food Futures dinner (5 August, evening) and workshop (6 August, 10:00–15:00), hosted by Dark Matter Labs with Camden Council, the Camden Food Partnership, and the Camden Food Mission. Intended as a working draft to test and adjust with the facilitation team before the event.</p>
+  </div>
+</footer>
+
+</body>
+</html>
