@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Camden Plan, Plainly — A Walkthrough of the Negative Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --paper:#FAF6EF;
+  --paper-deep:#F2ECDF;
+  --ink:#231F1A;
+  --ink-soft:#5B564C;
+  --ink-faint:#8B8577;
+  --rule:#DDD4C0;
+  --rule-strong:#C9BC9E;
+  --white:#FFFFFF;
+
+  --a:#A9761D; --a-bg:#F3E7CE;
+  --b:#1E6E5C; --b-bg:#DCEEE7;
+  --c:#2A6699; --c-bg:#DCE9F2;
+  --d:#A5455B; --d-bg:#F3DCE1;
+  --e:#5C4A96; --e-bg:#E4DEF0;
+  --f:#C1602E; --f-bg:#F6E1D2;
+  --g:#4B5563; --g-bg:#E3E5E8;
+  --h:#8F2E2E; --h-bg:#F0DBD8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Source Sans 3',system-ui,sans-serif;
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;color:var(--ink);}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+a{color:var(--a);}
+strong{font-weight:600;}
+
+/* ---- Nav ---- */
+nav.top{
+  position:sticky; top:0; z-index:50;
+  background:rgba(250,246,239,.92); backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--rule);
+}
+nav.top .navwrap{
+  max-width:920px;margin:0 auto;padding:12px 28px;
+  display:flex;align-items:center;gap:14px;overflow-x:auto;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.03em;
+}
+nav.top .navwrap a{white-space:nowrap;color:var(--ink-soft);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;}
+nav.top .navwrap a:hover{color:var(--ink);border-bottom-color:var(--rule-strong);}
+nav.top .navwrap .brand{color:var(--ink);font-weight:700;margin-right:6px;}
+
+/* ---- Hero ---- */
+header.hero{padding:68px 0 40px;border-bottom:1px solid var(--rule);}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px;}
+header.hero h1{font-size:clamp(34px,5.4vw,52px);line-height:1.08;letter-spacing:-.01em;margin-bottom:18px;max-width:820px;}
+header.hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:20px;color:var(--ink-soft);max-width:720px;margin-bottom:8px;}
+.tagline{margin-top:26px;font-size:15px;color:var(--ink-faint);border-top:1px solid var(--rule);padding-top:16px;max-width:760px;}
+
+section{padding:56px 0;border-bottom:1px solid var(--rule);}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px;}
+h2.stitle{font-size:clamp(26px,3.6vw,34px);line-height:1.15;margin-bottom:20px;max-width:760px;}
+p.lede{font-family:'Fraunces',serif;font-size:19px;font-weight:400;line-height:1.55;max-width:760px;margin-bottom:18px;color:var(--ink);}
+p{max-width:760px;margin-bottom:14px;color:var(--ink-soft);}
+.callout{
+  background:var(--white); border:1px solid var(--rule-strong); border-left:4px solid var(--ink);
+  padding:18px 22px; max-width:760px; margin:20px 0; font-size:15px; color:var(--ink-soft);
+}
+.callout b{color:var(--ink);}
+
+/* ---- Logic steps ---- */
+.steps{display:flex;flex-direction:column;gap:0;max-width:800px;margin-top:8px;}
+.step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:18px 0;border-bottom:1px dashed var(--rule);}
+.step:last-child{border-bottom:none;}
+.step .num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--white);background:var(--ink);
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.step h4{font-size:17px;margin-bottom:4px;}
+.step p{margin-bottom:0;font-size:15px;}
+
+/* ---- Shelf sections ---- */
+.shelf{padding:60px 0;border-bottom:1px solid var(--rule);}
+.shelf-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:14px;}
+.shelf-badge{
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;
+  width:44px;height:44px;flex:none;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.shelf-head h2{font-size:clamp(24px,3.2vw,30px);line-height:1.15;}
+.shelf-role{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px;}
+.shelf-summary{font-family:'Fraunces',serif;font-size:18px;font-style:italic;color:var(--ink-soft);max-width:740px;margin:14px 0 26px;}
+
+.item{
+  background:var(--white); border:1px solid var(--rule-strong); border-radius:10px;
+  padding:22px 24px; margin-bottom:16px; max-width:800px;
+}
+.item h3{font-size:18px;margin-bottom:2px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.item h3 .code{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;padding:2px 7px;border-radius:5px;}
+.item .row{display:grid;grid-template-columns:110px 1fr;gap:10px;margin-top:12px;font-size:14.5px;}
+.item .row + .row{margin-top:10px;}
+.item .row .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);padding-top:2px;}
+.item .row .val{color:var(--ink-soft);}
+.item .row .val b{color:var(--ink);}
+
+/* shelf accent utility classes */
+.acc-a .shelf-badge, .item.acc-a h3 .code{background:var(--a);color:#fff;}
+.acc-a .item, .acc-a{ }
+section.shelf.acc-a{background:var(--a-bg);}
+section.shelf.acc-b{background:var(--b-bg);}
+section.shelf.acc-c{background:var(--c-bg);}
+section.shelf.acc-d{background:var(--d-bg);}
+section.shelf.acc-e{background:var(--e-bg);}
+section.shelf.acc-f{background:var(--f-bg);}
+section.shelf.acc-g{background:var(--g-bg);}
+section.shelf.acc-h{background:var(--h-bg);}
+
+.acc-b .shelf-badge, .item.acc-b h3 .code{background:var(--b);color:#fff;}
+.acc-c .shelf-badge, .item.acc-c h3 .code{background:var(--c);color:#fff;}
+.acc-d .shelf-badge, .item.acc-d h3 .code{background:var(--d);color:#fff;}
+.acc-e .shelf-badge, .item.acc-e h3 .code{background:var(--e);color:#fff;}
+.acc-f .shelf-badge, .item.acc-f h3 .code{background:var(--f);color:#fff;}
+.acc-g .shelf-badge, .item.acc-g h3 .code{background:var(--g);color:#fff;}
+.acc-h .shelf-badge, .item.acc-h h3 .code{background:var(--h);color:#fff;}
+
+/* ---- Timeline (horizons) ---- */
+.horizon{
+  display:grid;grid-template-columns:180px 1fr;gap:24px;
+  padding:24px 0;border-top:1px solid var(--rule);
+}
+.horizon:first-of-type{border-top:none;}
+.horizon .h-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);letter-spacing:.04em;}
+.horizon h3{font-size:19px;margin-bottom:8px;}
+.horizon ul{margin:0;padding-left:18px;}
+.horizon li{margin-bottom:8px;font-size:15px;color:var(--ink-soft);}
+.horizon li b{color:var(--ink);}
+
+/* ---- Sequencing diagram (svg-ish via css) ---- */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:26px 0;max-width:820px;}
+.flow .node{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;
+  padding:10px 14px;border-radius:8px;color:#fff;white-space:nowrap;
+}
+.flow .arrow{color:var(--ink-faint);font-size:16px;}
+.flow .node.n-a{background:var(--a);} .flow .node.n-b{background:var(--b);}
+.flow .node.n-c{background:var(--c);} .flow .node.n-d{background:var(--d);}
+.flow .node.n-e{background:var(--e);} .flow .node.n-f{background:var(--f);}
+.flow .node.n-g{background:var(--g);} .flow .node.n-h{background:var(--h);}
+
+/* ---- money table ---- */
+table.money{width:100%;max-width:800px;border-collapse:collapse;margin-top:18px;font-size:14.5px;}
+table.money th{
+  text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--ink-faint);padding:8px 10px;border-bottom:1px solid var(--rule-strong);
+}
+table.money td{padding:10px;border-bottom:1px solid var(--rule);color:var(--ink-soft);vertical-align:top;}
+table.money td b{color:var(--ink);}
+
+/* ---- glossary chips ---- */
+.chipgrid{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;max-width:800px;}
+.chip{background:var(--white);border:1px solid var(--rule-strong);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--ink-soft);}
+.chip b{color:var(--ink);}
+
+footer{padding:50px 0 70px;}
+footer p{font-size:13.5px;color:var(--ink-faint);max-width:760px;}
+
+@media (max-width:640px){
+  .step{grid-template-columns:36px 1fr;}
+  .item .row{grid-template-columns:1fr;}
+  .item .row .lbl{padding-top:0;}
+  .horizon{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="navwrap">
+    <a class="brand">CAMDEN, PLAINLY</a>
+    <a href="#idea">The idea</a>
+    <a href="#logic">How it's meant to work</a>
+    <a href="#glance">The 8 shelves</a>
+    <a href="#a">A</a><a href="#b">B</a><a href="#c">C</a><a href="#d">D</a>
+    <a href="#e">E</a><a href="#f">F</a><a href="#g">G</a><a href="#h">H</a>
+    <a href="#horizons">Over time</a>
+    <a href="#money">The money</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Plain-English walkthrough · rebuilt from the Camden Negative Portfolio v2.0</div>
+  <h1>Camden doesn't grow food. This plan turns that into its biggest asset.</h1>
+  <p class="sub">A borough with almost no farmland decides to stop treating that as a weakness — and instead uses its huge, guaranteed buying power to make sure someone, somewhere, builds the next generation of protein and nutrition supply.</p>
+  <p class="tagline">This document takes the original instrument book — dense, technical, written for specialists — and walks through it in order: what the plan is trying to do, the chain of reasoning behind it, what's actually in it (translated into plain language), and how the pieces are meant to click together over ten years.</p>
+</header>
+
+<section id="idea">
+  <div class="eyebrow">Start here</div>
+  <h2 class="stitle">The core idea, in one paragraph</h2>
+  <p class="lede">Camden has about 210,000 residents, almost no farmland, and an enormous concentration of hospitals, schools and daily shoppers. It can't produce food at scale. But it can <strong>promise, with real money behind the promise, to buy</strong> food produced in better ways — and that promise is what convinces someone else to build the fermentation plant, the indoor farm, or the pulse-processing line. The signature on a contract, not a plot of land, is Camden's raw material.</p>
+  <p>Everything in this plan flows from one strategic worry: as energy, fertiliser and import costs get more volatile over the next few decades, will every resident still be able to afford a decent diet? The plan doesn't try to answer that by growing more food locally — it answers it by becoming a very credible, very well-organised <strong>customer</strong>.</p>
+
+  <div class="callout"><b>Why it's called a "negative" portfolio.</b> A normal investment portfolio holds things that pay you money back — shares, property, bonds. This one is built the opposite way round. Almost everything in it is a cost, a contract, or a promise Camden is taking <i>on</i> — an insurance-style commitment, not an asset collecting a return. The pay-off isn't a dividend; it's <i>things that don't happen</i>: fewer people going without proper nutrition, less pressure on the NHS, less chaos during a price shock. It's best understood as an insurance policy the borough is writing for itself, funded up front.</div>
+</section>
+
+<section id="logic">
+  <div class="eyebrow">The reasoning</div>
+  <h2 class="stitle">How it's meant to work, in five moves</h2>
+  <p>The original document sets out twelve technical steps of reasoning. Stripped of the jargon, it comes down to five moves, each one building on the last.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div><h4>Camden is a pure customer, not a producer</h4>
+      <p>Almost no farmland, but one of the densest concentrations of guaranteed food buyers in Europe — hospitals, universities, schools, care homes, plus more people working in the borough each day than live in it.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div><h4>What Camden promises to buy shapes what gets built</h4>
+      <p>If a large, credible buyer commits — on paper, with money behind it, for years — to purchase a certain kind of food, that commitment on its own makes it worthwhile for a producer to build the factory that supplies it. The order comes before the factory, not after.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div><h4>Today's demand is quietly broken, so it has to be rebuilt on purpose</h4>
+      <p>Cheap food today is often cheap because its real costs — to the NHS, to the land, to future generations — are hidden elsewhere. So the plan doesn't just redirect existing spending; it constructs a new, better-specified kind of demand from scratch, and makes that the actual product Camden is selling to the market: not a brand, not a technology, but a standard.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div><h4>Promises only work if they're credible, so they're bonded and verified</h4>
+      <p>A pledge that anyone can walk away from is worthless to a lender. So every commitment — institutional or household — is registered, checked, and backed by something real (money, or reputation for those who can't afford to put money down), with clear rules for exit. That credibility itself becomes valuable: it lowers the cost of building new supply, because lenders will fund something backed by a real, verified order book.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div><h4>The people who made the promise share the upside</h4>
+      <p>Because the households and institutions took on the risk of committing early, they get to convert that commitment into part-ownership of the supply it helped create — plus a share of the physical reserve, the taste-and-culture work that makes it all desirable, and a strict system for catching and admitting failure, so the whole thing stays honest.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="glance">
+  <div class="eyebrow">Overview</div>
+  <h2 class="stitle">The portfolio at a glance: eight shelves</h2>
+  <p>The instruments are grouped into eight "shelves" — not because eight is a magic number, but because each shelf does one distinct job in the sequence from <i>owning the risk</i> through to <i>proving it's still honest</i>. Roughly <b>£64M</b> of capital and <b>£10.6M a year</b> of running cost at full maturity, against an estimated <b>£18–35M a year</b> of avoided costs (NHS burden, emergency response, price-shock damage) — all figures are order-of-magnitude estimates, not forecasts.</p>
+
+  <div class="flow">
+    <span class="node n-a">A · Promise</span><span class="arrow">→</span>
+    <span class="node n-b">B · Forward demand</span><span class="arrow">→</span>
+    <span class="node n-c">C · Readiness</span><span class="arrow">+</span>
+    <span class="node n-d">D · Protection</span><span class="arrow">→</span>
+    <span class="node n-e">E · Build &amp; own</span>
+  </div>
+  <div class="flow">
+    <span class="node n-f">F · Culture</span>
+    <span class="arrow">reinforces all of it, throughout</span>
+  </div>
+  <div class="flow">
+    <span class="node n-g">G · Running system</span>
+    <span class="arrow">is what actually executes every shelf, day to day</span>
+  </div>
+  <div class="flow">
+    <span class="node n-h">H · Honesty</span>
+    <span class="arrow">watches all of it, and forces admissions of failure</span>
+  </div>
+
+  <p style="margin-top:18px;"><b>A–D</b> are the obligations — the "negative" core: a promise, a set of buying commitments, the readiness to act, and the protection for the vulnerable. <b>E–F</b> are what those obligations pay for and make desirable. <b>G</b> is the machinery that runs all of it. <b>H</b> is what keeps everyone honest about whether any of it is actually working.</p>
+</section>
+
+<!-- SHELF A -->
+<section class="shelf acc-a" id="a">
+  <div class="shelf-head">
+    <div class="shelf-badge">A</div>
+    <div>
+      <h2>The Promise</h2>
+      <div class="shelf-role">Owning the risk</div>
+    </div>
+  </div>
+  <p class="shelf-summary">Camden formally takes on a liability nobody currently owns: whether every resident can get an adequate diet, even through a bad year. Everything else in the plan is only credible because this exists first.</p>
+
+  <div class="item acc-a">
+    <h3>Nutrition floor commitment <span class="code">N1</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">The council, jointly with the local NHS body, formally guarantees a minimum standard of nutrition for every resident — enough protein, key nutrients, fresh produce, and safe nutrition for infants and medical patients — and re-checks that standard every year.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Turn a vague public anxiety ("what if food gets harder to afford?") into an <b>owned, budgeted responsibility</b> that someone is accountable for.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By publishing, every year, both the promised standard <i>and</i> the honest gap between that standard and what the borough can currently deliver — plus a funded plan to close the gap.</div></div>
+  </div>
+
+  <div class="item acc-a">
+    <h3>Yearly stress-test calendar <span class="code">C5</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">A calendar of the four moments the system is most likely to be tested — winter, the pre-harvest import squeeze, fertiliser/energy price resets, and a "worst case, everything at once" scenario — plus a rehearsal run every year against the worst of these, not at a convenient quiet moment.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make sure the plan is tested against the conditions it actually needs to survive, not against an easy average day.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By running a live test at the worst point of the year and publishing the result — including when it fails, because a test that can never fail isn't proving anything.</div></div>
+  </div>
+</section>
+
+<!-- SHELF B -->
+<section class="shelf acc-b" id="b">
+  <div class="shelf-head">
+    <div class="shelf-badge">B</div>
+    <div>
+      <h2>Forward Demand</h2>
+      <div class="shelf-role">The engine of the whole plan</div>
+    </div>
+  </div>
+  <p class="shelf-summary">Long-term, binding buying commitments from big institutions and ordinary households. This is what actually persuades producers and their lenders to build new supply — supply Camden itself will never build.</p>
+
+  <div class="item acc-b">
+    <h3>Institution buying contracts <span class="code">N2</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Camden's big food buyers — hospitals, university catering, ~60 schools, care homes — convert their everyday food spend into 10-year contracts that commit a growing share of purchasing to nutrition standards the plan sets, regardless of which specific company or technology supplies it.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Give producers a guaranteed, sizeable, long-term customer base — around £7M a year by year five — worth building a factory for.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By writing the contracts around outcomes ("meets this nutrition and sustainability bar"), not around any one supplier, so the market stays open and competitive.</div></div>
+  </div>
+
+  <div class="item acc-b">
+    <h3>Household pledge scheme <span class="code">N3</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Individual households voluntarily pledge to shift a share of their protein spending to qualifying suppliers once enough other households join. Wealthier households back their pledge with money; lower-income households can back it with a track record and a guarantee instead of cash, so nobody is priced out of participating.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Turn household-level intentions into a real, verifiable, collective buying block — growing from 12,000 to 60,000 households over the decade.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Pledges are checked quarterly using anonymous, aggregated data (never itemised shopping data), and every pledge comes with clear exit rights and, later, a route to part-ownership of the supply it helped fund.</div></div>
+  </div>
+
+  <div class="item acc-b">
+    <h3>Published five-year migration plan <span class="code">N8</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">A public timetable showing, year by year, how fast Camden intends to shift its buying away from fragile, import-dependent, land-degrading protein sources.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Change supplier behaviour <i>before</i> a single pound has actually moved — because a credible published plan is often enough on its own to shift investment decisions.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By being fair and open — no single company is named or targeted, and any supplier can qualify against the published standard at any time.</div></div>
+  </div>
+
+  <div class="item acc-b">
+    <h3>Sharing the standard with other places <span class="code">T3</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Other boroughs, institutions, and eventually the wider London region are invited to adopt Camden's nutrition standard and pool their buying power with Camden's.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Solve the problem that 210,000 people alone can't move national food markets — by making the thing Camden exports <i>the standard itself</i>, not the food.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By packaging the standard so other places can adopt it easily, aiming for three outside adopters by year four and a full regional pool by year five.</div></div>
+  </div>
+</section>
+
+<!-- SHELF C -->
+<section class="shelf acc-c" id="c">
+  <div class="shelf-head">
+    <div class="shelf-badge">C</div>
+    <div>
+      <h2>Readiness</h2>
+      <div class="shelf-role">Being able to move fast</div>
+    </div>
+  </div>
+  <p class="shelf-summary">Rather than stockpiling food in a warehouse, Camden pays for the <i>ability</i> to react — kitchens that can switch supply within days, pre-bought options on extra supply, and a reserve that lives inside ordinary shops.</p>
+
+  <div class="item acc-c">
+    <h3>Kitchen switching fees <span class="code">N4</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Institutional kitchens are paid a standing fee to stay drilled and ready to move nearly half their meal volume to an alternative protein source within 72 hours, tested twice a year.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make sure that if supply is disrupted, meals for patients, students and care residents keep coming without a gap.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Modelled on the electricity industry's "demand response" — kitchens are paid for standing readiness, not just for food delivered, and the readiness itself is regularly drilled and verified.</div></div>
+  </div>
+
+  <div class="item acc-c">
+    <h3>Supply options (call options on food) <span class="code">N5</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Camden buys the right — not the obligation — to call on extra fermented protein, indoor-farm produce, pulses, or medical nutrition supply, for one to three years at a time, like an insurance policy.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Guarantee access to extra supply during a squeeze, without paying to hold that supply all year round.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">By paying suppliers a premium to hold the option, and testing that the option actually delivers during the annual import-window rehearsal.</div></div>
+  </div>
+
+  <div class="item acc-c">
+    <h3>Reserve stock hidden inside ordinary shops <span class="code">N6</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Local shops, food hubs, market stalls and subscription pantries are paid a small fee to hold extra shelf-stable protein, pulses and infant nutrition as part of their everyday stock — not in a separate warehouse.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Solve the classic stockpile problem — food going stale in the wrong place — by keeping the reserve fresh through ordinary, everyday sales, while still being callable in a crisis.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">The borough pays only the small extra cost of holding more depth than a shop would normally stock; regular commerce turns the stock over so it never goes stale; random audits confirm the depth is really there. Target: 120 shops/hubs by year five.</div></div>
+  </div>
+</section>
+
+<!-- SHELF D -->
+<section class="shelf acc-d" id="d">
+  <div class="shelf-head">
+    <div class="shelf-badge">D</div>
+    <div>
+      <h2>Protection</h2>
+      <div class="shelf-role">Deciding, in advance, who bears the shock</div>
+    </div>
+  </div>
+  <p class="shelf-summary">A hard rule: neither the access nor the savings of the poorest households are ever allowed to become the plan's shock absorber.</p>
+
+  <div class="item acc-d">
+    <h3>Automatic affordability top-ups <span class="code">N7</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Automatic financial credits for lower-income households, triggered whenever a price-inflation index crosses a set threshold — with a lower, more sensitive trigger during winter.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Get help to people fast during a price spike, with no application form and no case-by-case decision that could delay or deny it.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">A pre-funded pool pays out automatically once the trigger fires, with credits reaching eligible households within 14 days.</div></div>
+  </div>
+
+  <div class="item acc-d">
+    <h3>Protected ownership tranche <span class="code">P6</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">When lower-income households' pledges eventually convert into part-ownership of the supply they helped fund, that stake sits in a protected layer: they get price protection, but never exposure to investment losses.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Let everyone participate in the upside, without any household risking money it can't afford to lose.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">A charitable, first-loss guarantee fund (£8M) absorbs any downside for this tranche; only households and institutions that bonded with cash carry genuine investment risk.</div></div>
+  </div>
+</section>
+
+<!-- SHELF E -->
+<section class="shelf acc-e" id="e">
+  <div class="shelf-head">
+    <div class="shelf-badge">E</div>
+    <div>
+      <h2>Build &amp; Own</h2>
+      <div class="shelf-role">Turning credibility into owned, physical capacity</div>
+    </div>
+  </div>
+  <p class="shelf-summary">This is the one shelf that behaves like a normal investment portfolio: real assets that produce and store food, owned by the people and institutions whose commitments made them worth building in the first place.</p>
+
+  <div class="item acc-e">
+    <h3>Fermentation and plant-based production <span class="code">P1</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Three local production sites making tempeh, mycoprotein and koji-style ferments, plus pulse processing — supported by a share in a larger regional-scale plant funded together with other adopters.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Produce the shelf-stable, protein-dense, fibre-rich food that fills the readiness reserve — and give committers a genuine ownership stake in it.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">The buying contracts from Shelf B de-risk the investment enough for it to get built at all; the borough's fund then takes a founding equity stake in the value that de-risking created. (≈£6M locally, ≈£12M via the shared regional plant.)</div></div>
+  </div>
+
+  <div class="item acc-e">
+    <h3>Small indoor farms <span class="code">P2</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Small controlled-environment growing spaces in hospital basements, arches and rooftops, producing leafy greens, mushrooms and fresh produce for medical and emergency use only.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Provide a strategic buffer of fresh, nutrient-dense produce close to where it's needed most (hospitals) — never intended to replace bulk food supply.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Funded by council capital and a resilience bond, with output certified during the annual import-squeeze rehearsal.</div></div>
+  </div>
+
+  <div class="item acc-e">
+    <h3>Shop and hub fit-out <span class="code">P3</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Money to physically kit out the 120 reserve-holding shops and hubs from Shelf C — extra shelving, community "dark store" space, backup cold storage and power, and dispatch systems.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make the readiness reserve physically real and reliable, not just a contract on paper.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Funded through the resilience bond, co-invested alongside the shops themselves.</div></div>
+  </div>
+
+  <div class="item acc-e">
+    <h3>Pledges converting into ownership <span class="code">P6</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">The mechanism that turns household and institutional pledges into an actual ownership stake in the supply they helped create — but only once real, delivered volumes have happened, never on promises alone.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Reward the people who took the early risk of committing, in proportion to their participation rather than the size of their wallet.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Conversion windows open at set participation thresholds; value is set by an independent, arm's-length valuation, never Camden's own projections.</div></div>
+  </div>
+</section>
+
+<!-- SHELF F -->
+<section class="shelf acc-f" id="f">
+  <div class="shelf-head">
+    <div class="shelf-badge">F</div>
+    <div>
+      <h2>Culture</h2>
+      <div class="shelf-role">Making it genuinely wanted, not just tolerated</div>
+    </div>
+  </div>
+  <p class="shelf-summary">A pledge fails if the alternative food feels like a sacrifice. This shelf builds real appetite and trust — through pleasure and everyday cooking, not lecturing about virtue.</p>
+
+  <div class="item acc-f">
+    <h3>The Camden Nutrition Standard <span class="code">T2</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">The published rulebook defining what actually counts as "qualifying" nutrition and sustainability — open to any supplier, including existing incumbents.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Give the whole plan one clear, shared measuring stick — and stop the standard itself becoming a badge one company could control or monopolise.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Held in independent custody, publishing its evidence but never issuing a marketing verdict or endorsement of any one brand.</div></div>
+  </div>
+
+  <div class="item acc-f">
+    <h3>Shared kitchens and cooking spaces <span class="code">T1</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Shared kitchen facilities, school taste-programme spaces, and public cook-line venues.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Give the borough the physical places where new recipes get tested, tastes get formed, and switching drills actually happen.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Council and philanthropic capital fund the fit-out; the same spaces double as switching-readiness venues and places to gather everyday feedback on what people actually like.</div></div>
+  </div>
+
+  <div class="item acc-f">
+    <h3>Chef and producer collaboration fund <span class="code">T5</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Funded residencies pairing chefs with producers, plus real-world taste trials in Camden Town and King's Cross's busy food markets.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make the new ingredients genuinely delicious, tested with real customers — and help new food categories qualify for the standard.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">A strict rule keeps this fund from ever promoting a specific business the borough has a financial stake in — it develops categories, not brands.</div></div>
+  </div>
+
+  <div class="item acc-f">
+    <h3>Open recipe library <span class="code">T4</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">A free, openly-licensed library of recipes and reformulated dishes that meet the nutrition standard.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make it progressively easier and cheaper for any kitchen to switch, because someone else has already solved the recipe.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Every new entry is tested and versioned; kitchens draw on it directly when carrying out their own switching drills.</div></div>
+  </div>
+</section>
+
+<!-- SHELF G -->
+<section class="shelf acc-g" id="g">
+  <div class="shelf-head">
+    <div class="shelf-badge">G</div>
+    <div>
+      <h2>The Running System</h2>
+      <div class="shelf-role">What actually makes it happen, day to day</div>
+    </div>
+  </div>
+  <p class="shelf-summary">Everything above is a promise or an asset. This shelf is the working machinery — a small trusted "bench" holding the rulebooks and registries, plus 25 small, independent, self-funding ventures that each do one practical job.</p>
+
+  <div class="item acc-g">
+    <h3>The trusted bench <span class="code">C1–C4</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">A small, independently governed core: a registry that tracks every commitment and verifies it; a Commitment Assembly representing the households who've pledged; an analytics unit that traces avoided costs and turns them into real payments; and a sensing team tracking early-warning signals.</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Keep the whole system legible, verified and accountable, without any single organisation — council, supplier, or platform — being able to quietly take control of it.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Held in independent trust custody, with an explicit deed governing who sets rules, who verifies, and who can exit — a coordinating body, never a sovereign one.</div></div>
+  </div>
+
+  <div class="item acc-g">
+    <h3>25 small ventures across five practical jobs <span class="code">FM1–FM5</span></h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Twenty-five small, self-contained services grouped into five practical areas: <b>switching &amp; migration</b> (e.g. running the kitchen switching drills), <b>sensing &amp; early warning</b> (e.g. a "shelf-gap" stock-out alert system, a price-stress index), <b>storage &amp; rotation</b> (e.g. running the reserve rotation through shops), <b>verification</b> (e.g. auditing suppliers' claims, keeping the settlement records), and <b>taste &amp; culinary work</b> (e.g. the school taste programme, market-hall trials).</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Turn every part of the plan into a concrete, funded, checkable piece of work — not a policy document.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">Each venture must find a real paying customer (council, NHS, caterers, households, insurers) to justify existing at all. Around 4 in 10 are expected to be retired or fail along the way — treated as normal, healthy pruning, not a warning sign.</div></div>
+  </div>
+</section>
+
+<!-- SHELF H -->
+<section class="shelf acc-h" id="h">
+  <div class="shelf-head">
+    <div class="shelf-badge">H</div>
+    <div>
+      <h2>Honesty</h2>
+      <div class="shelf-role">The plan's claim to being taken seriously</div>
+    </div>
+  </div>
+  <p class="shelf-summary">The plan's credibility rests on being willing to admit, in public and in advance, exactly what would prove it wrong — not on how elegant its design looks on paper. Eleven specific trip-wires, each with a consequence agreed before it's ever triggered.</p>
+
+  <div class="item acc-h">
+    <h3>Eleven pre-agreed failure tests</h3>
+    <div class="row"><div class="lbl">What it is</div><div class="val">Eleven clearly defined ways the plan could be failing — from "demand exists but no one actually built new supply," to "the standard has been captured by one supplier or platform," to "the burden has quietly landed on poor households after all."</div></div>
+    <div class="row"><div class="lbl">Aims to achieve</div><div class="val">Make sure failure gets caught and acted on quickly, rather than explained away — and give everyone (households, suppliers, the council itself) confidence the plan will hold itself to account.</div></div>
+    <div class="row"><div class="lbl">How</div><div class="val">A few illustrative examples: if no qualifying new production facility is actually committed to within 30 months of the first big household threshold, recruitment is frozen and the failure is published. If verification is ever found tracking what individual households actually buy — rather than anonymous, aggregated patterns — that instrument is suspended immediately and the data is destroyed, with the incident published. If the culture-and-taste programme is ever caught promoting a business the borough has a financial stake in, that output is withdrawn and a repeat breach shuts the programme down entirely.</div></div>
+  </div>
+</section>
+
+<section id="horizons">
+  <div class="eyebrow">Sequencing</div>
+  <h2 class="stitle">How this is likely to unfold, in three stages</h2>
+  <p>The shelves aren't built all at once. Shelf A comes first because nothing else is credible until the risk has an owner. Shelves B, C and D follow quickly, because they're what makes the promise real day to day. Shelf E only becomes buildable once B has generated enough credible demand to de-risk it. F and G run underneath all of it from the start. H watches everything, throughout.</p>
+
+  <div class="horizon">
+    <div class="h-label">Months 0–18<br><span class="mono">Horizon 1</span></div>
+    <div>
+      <h3>Someone finally owns the risk</h3>
+      <ul>
+        <li>The nutrition floor is published (Shelf A) — for the first time, a named institution owns the question of whether every resident can eat well through a bad winter, and publishes the gap.</li>
+        <li>The first institutional buying contracts are signed (Shelf B), and school menus start migrating — so taste-formation (Shelf F) begins in the very same school term.</li>
+        <li>The first 25 local shops are paid to hold reserve depth (Shelf C) — the first time a corner shop has been treated as strategic infrastructure.</li>
+        <li>A weekly price-stress index goes live (Shelf G), so diet-cost pressure by income level is tracked continuously rather than discovered once a year.</li>
+        <li>The first winter stress test runs, and — expectedly — fails; publishing that failure turns an abstract worry into a scheduled programme of fixes.</li>
+        <li>The household Commitment Assembly is formally set up as the first 12,000-household pledge threshold opens.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="h-label">Years 2–5<br><span class="mono">Horizon 2</span></div>
+    <div>
+      <h3>Supply starts moving toward the demand</h3>
+      <ul>
+        <li>A 30-month countdown begins for a real production facility to actually get built against the published demand book — or the plan honestly scales back its ambitions.</li>
+        <li>Suppliers change their investment plans in response to the published five-year plan (Shelf B), often before a single extra pound has actually been spent.</li>
+        <li>NHS money starts flowing back in, paying for the prevention work because avoided hospital admissions are now something that can be measured and attributed.</li>
+        <li>The first local fermentation site opens, and Camden-made protein starts entering the rotating reserve (Shelf E).</li>
+        <li>Three outside adopters start pooling their own buying power with Camden's standard (Shelf B/F) — solving by numbers what Camden alone never could.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="horizon">
+    <div class="h-label">Years 5–10<br><span class="mono">Horizon 3</span></div>
+    <div>
+      <h3>The system compounds and proves itself</h3>
+      <ul>
+        <li>A live drill proves Camden can hold its nutrition floor through the worst realistic 90-day window — verified by rehearsal, not just asserted on paper.</li>
+        <li>Households that pledged early start receiving a genuine financial return, proportional to how much they participated (Shelf E).</li>
+        <li>A whole generation of schoolchildren has grown up through ten years of taste-formation — the slowest, but most durable, asset in the entire plan (Shelf F).</li>
+        <li>Every calorie shifted onto the new supply chains is pressure taken off land elsewhere in the world — deliberately left unpriced, because the case for the plan shouldn't rest on its most arguable number.</li>
+        <li>A formal review decides which obligations retire, which become permanent infrastructure, and whether the wider region still needs Camden to run this at all, or can carry the standard on its own.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="money">
+  <div class="eyebrow">In numbers</div>
+  <h2 class="stitle">The money, briefly</h2>
+  <p>None of these figures are forecasts — they're order-of-magnitude planning estimates, explicitly labelled as such in the original document, meant to be replaced once real diagnostic work is done.</p>
+  <table class="money">
+    <tr><th>Where the money comes from</th><th>What it pays for</th></tr>
+    <tr><td><b>Council capital &amp; revenue</b> (~25%)</td><td>The promise, the running-system bench, readiness fees, culture spend</td></tr>
+    <tr><td><b>NHS prevention co-payment</b> (~15%)</td><td>The protection pool, sensing work, clinical instruments — funded because avoided harm is now measurable</td></tr>
+    <tr><td><b>A dedicated resilience bond</b> (£25M)</td><td>The indoor farms, the storage estate, a share of production — priced against the cost avoided</td></tr>
+    <tr><td><b>A wider regional (GLA) pool</b> (~20% from year 4)</td><td>Syndicated plant ownership, pooled reserve options</td></tr>
+    <tr><td><b>Philanthropic first-loss guarantee</b> (£8M)</td><td>The protected tranche, so low-income participants never carry investment risk</td></tr>
+    <tr><td><b>Household patronage capital</b> (£4M)</td><td>Household pledges that convert into an ownership stake over time</td></tr>
+  </table>
+  <p style="margin-top:22px;"><b>Ten-year capital:</b> ≈£64M. <b>Running cost at maturity:</b> ≈£10.6M a year. <b>Estimated avoided cost:</b> £18–35M a year, once mature — from reduced NHS burden, reduced emergency response needs, and reduced price-shock damage. The single figure the whole plan eventually has to prove is real: the gap in financing cost between supply built speculatively and supply built against Camden's bonded, verified order book. That gap is the actual value this plan is claiming to create.</p>
+</section>
+
+<footer>
+  <div class="eyebrow">A note on this document</div>
+  <p>This is a plain-English walkthrough built from <i>The Camden Negative Portfolio v2.0 — From Intent to Instrument</i>. Every instrument, figure and mechanism above is drawn directly from that source document; nothing has been added, and the technical labels (N1, P6, T2, and so on) are kept alongside the plain-language description so this can still be cross-referenced against the original. Figures marked as indicative in the source remain indicative here — they are design placeholders, not forecasts, and the source document is explicit that it "should not survive first contact with the diagnostic unchanged."</p>
+</footer>
+
+</div>
+</body>
+</html>
